@@ -1,85 +1,148 @@
-# math-skills
-This repository hosts a project aimed at enhancing mathematical and statistical computation skills. The project focuses on calculating fundamental statistical measures including Average, Median, Variance, and Standard Deviation.
+<a name="readme-top"></a>
 
 
-Your program is a good start towards handling the reading of data and computing statistical measures. However, there are several enhancements and corrections we can make to better align with best practices and the considerations outlined earlier. Let's go through some improvements and fixes.
-Review and Enhancements
-1. 
-Error and Edge Case Handling
+# Math Skills
+## Statistical Analysis Tool
 
-    Non-numeric Values: Your program stops and reports the first non-numeric value it encounters. Instead, it could skip non-numeric values and continue processing, or at least count them and report the total count at the end.
-    Missing Values: You prompt the user for missing value imputation but only when there are missing values (""). A better approach might be to handle this more gracefully or automatically without user intervention for a batch process.
-    Empty File: Good check for an empty file after reading, but consider checking if only non-numeric values were present.
+This project is a command-line tool written in Go that performs statistical analysis on numerical data read from a file. It calculates the average, median, variance, and standard deviation of the data and provides the results in a user-friendly format.
 
-2. 
-Performance
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
-    Sorting Algorithm: Using Bubble Sort is not efficient for large datasets. Consider using Go's built-in sort for better performance.
 
-3. 
-Precision and Rounding
+## About The Project
+The primary objective of this project is to create a robust and efficient statistical analysis tool that can handle large datasets with ease. The tool is designed to read numerical data from a file, perform various statistical calculations, and display the results in a readable format.
 
-    You are using floating-point arithmetic but rounding them to two decimal places in outputs. According to the task description, you should round results to the nearest integer for final output.
+### Built With
+<img src="https://go.dev/blog/go-brand/Go-Logo/PNG/Go-Logo_Blue.png" width="60" height="60">
 
-4. 
-Numerical Stability
 
-    Standard Deviation Calculation: Your StDev function seems to manually compute the square root using an iterative approach, which isn’t numerically stable for all inputs and is unnecessary since Go provides math.Sqrt.
 
-5. 
-Output Format
 
-    Ensure outputs are in the exact format required by the specification, which means rounding all outputs to the nearest integer and matching the case and structure exactly.
+<p align="right">(<a href="#math-skills">back to top</a>)</p>
 
-1. 
-Data Format and Integrity
 
-    Consistency: Ensure that every line in your input file contains exactly one integer. Your program should be robust enough to handle or report inconsistencies or unexpected data formats.
-    Non-Numeric Values: Consider what should happen if the file contains non-numeric values. Should your program skip them, report an error, or halt execution?
-    Empty Lines: Decide how your program will handle empty lines (ignore or treat them as errors).
+## Getting Started
 
-2. 
-Statistical Assumptions
+To get started with Math Skills, follow these instructions:
 
-    Population vs. Sample: Confirm that you are treating the data as a full population (not a sample from a larger population), as this affects the calculation of variance and standard deviation.
-    Scale and Units: Understand the scale and units of the data (if applicable), although for pure numbers this might not change the computational approach, it's crucial for interpreting results.
+### Prerequisites
+- Go installed on your machine.
+- Basic understanding of Go programming language.
 
-3. 
-Numerical Stability and Precision
 
-    Floating Point Precision: Be aware of precision issues when dealing with floating-point arithmetic, especially if your data set is large or contains very large or very small numbers.
-    Rounding: You are required to print rounded integers. Ensure that you use a consistent rounding method (e.g., round-half-up) throughout your calculations.
+### Installation
+Clone the repository:
+```sh
+git clone https://github.com/Vincent-Omondi/math-skills.git
+``` 
 
-4. 
-Performance and Scalability
+Navigate to the project directory:
 
-    Large Files: If the data file is very large, consider the memory usage of your program. You might need to read the file in chunks if it does not fit into memory.
-    Efficiency: Implement efficient algorithms for median, variance, and standard deviation to handle large datasets smoothly.
+```sh
+cd math-skills
+```
+<p align="right">(<a href="#math-skills">back to top</a>)</p>
 
-5. 
-Edge Cases
 
-    Single Data Point: Ensure your program can handle the case where the file contains only one data point (this affects variance and standard deviation).
-    No Data Points: Decide how your program should behave if the file is empty (e.g., should it return an error or handle it gracefully?).
+## Usage
 
-6. 
-Output Format
+To use Math Skills, follow these steps:
 
-    Formatting: Ensure that the output strictly follows the required format, as the testing will likely expect exact matches.
-    Error Handling: Consider how your program outputs errors (e.g., to standard error) and how it exits in error conditions (exit codes).
+1. Prepare a text file containing the dataset you want to analyze. Each line of the file should represent one value of the dataset.
 
-7. 
-File Handling
+2. Compile the program using the following command
 
-    Read Permission: Ensure your program gracefully handles the case where the file does not exist or is not readable.
-    Argument Validation: Verify that the command-line arguments are valid and provide useful error messages if not.
+```sh
+go build
+```
+3. Run the compiled program with the file path as an argument
 
-Example Considerations in Practice
+```sh
+./math-skills <file_path>
+```
+Replace <file_path> with the path to the file containing the numerical data you want to analyze. The file should have one number per line, and non-numeric values and overflow will be ignored.
+Example:
+```sh
+./math-skills data.txt
+```
 
-Here is a quick checklist based on the above considerations:
+The program will output the statistics in the following manner (the following numbers are only examples)
 
-    Integrity Check: Before processing, verify all data is numeric.
-    Edge Cases: Write tests or add checks for cases with 0, 1, and many numbers.
-    Rounding: Use a library or function that supports consistent rounding.
-    Performance: If testing with large numbers, check memory and efficiency; consider using generators or iterators if applicable.
-    Output: Ensure that the output format is exactly as specified.
+```
+User$ ./math-skills data.txt
+Average: 147
+Median: 146
+Variance: 769
+Standard Deviation: 28
+```
+All values are rounded to the nearest integer.
+
+<p align="right">(<a href="#math-skills">back to top</a>)</p>
+
+## RoadMap
+* Add support for different input file formats (e.g., CSV, xlsx)
+* Implement additional statistical measures (e.g., quartiles, percentiles)
+* Enhance error handling and input validation
+* Optimization for large datasets.
+* Develop a graphical user interface (GUI) for better user experience
+
+<p align="right">(<a href="#math-skills">back to top</a>)</p>
+
+
+## Contributing
+
+Contributions are welcome! If you want to contribute to Math Skills, follow these steps:
+
+1. Fork the project.
+2. Create your feature or bugfix branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature/bugfix'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a pull request.
+
+<p align="right">(<a href="#math-skills">back to top</a>)</p>
+
+
+## License
+This project is licensed under the MIT License.
+
+<p align="right">(<a href="#math-skills">back to top</a>)</p>
+
+## Contact
+If you have any questions or need further assistance, please feel free to contact the project maintainer:
+
+[X](https://tweeter.com/vinomondi_1)
+
+[Github](https://github.com/Vincent-Omondi/)
+
+<p align="right">(<a href="#math-skills">back to top</a>)</p>
+
+
+## Acknowledgments
+
+Special thanks to the Zone01 for their valuable resources and support.
+
+<p align="right">(<a href="#math-skills">back to top</a>)</p>

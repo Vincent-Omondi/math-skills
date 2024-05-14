@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -13,12 +14,21 @@ import (
 )
 
 func main() {
+	// Check if a filename is provided as an argument
 	if len(os.Args) != 2 {
 		fmt.Println("Usage: go run main.go <filename>")
 		return
 	}
 
 	inputFile := os.Args[1]
+
+	// Check if the file has a valid extension .txt
+	fileExtension := filepath.Ext(inputFile)
+	if fileExtension != ".txt" {
+		fmt.Printf("Error: Only .txt and .xlsx files are allowed. File '%s' has an invalid extension.\n", inputFile)
+		return
+	}
+
 	// Open the file
 	file, err := os.Open(inputFile)
 	if err != nil {
@@ -37,7 +47,6 @@ func main() {
 
 	// Slice to store the data
 	var data []float64
-	var nonNumericValues int
 
 	// REad file line by line
 	for scanner.Scan() {
@@ -54,7 +63,6 @@ func main() {
 		// Convert strings to float
 		value, err := strconv.ParseFloat(line, 64)
 		if err != nil {
-			nonNumericValues++
 			continue // skip non-numeric values
 		}
 		data = append(data, value)
@@ -65,10 +73,6 @@ func main() {
 		return
 	}
 
-	if nonNumericValues > 0 {
-		fmt.Printf("Skipped %d non-numeric value(s).\n", nonNumericValues)
-	}
-
 	var overFlowCount int
 	var validData []float64
 
@@ -76,15 +80,10 @@ func main() {
 		intValue, overflow := utils.FloatToInt(value)
 		if overflow {
 			overFlowCount++
-			fmt.Printf("Warning: Potential overflow detected for value: %.2f. Ignoring in statistics.\n", value)
 		} else {
 			validData = append(validData, float64(intValue))
 		}
 	}
-
-	// if overFlowCount > 0 {
-	// 	fmt.Printf("Skipped %d value(s) due to potential overflow.\n", overFlowCount)
-	// }
 
 	mean := stats.Mean(validData)
 	median := stats.Median(validData)

@@ -1,6 +1,10 @@
 package stats
 
+// Mean calculates the mean (average)
 func Mean(data []float64) float64 {
+	if len(data) == 0 {
+		return 0
+	}
 	var sum float64 = 0
 
 	for _, num := range data {
@@ -9,7 +13,11 @@ func Mean(data []float64) float64 {
 	return sum / float64(len(data))
 }
 
+// Median calculates the median
 func Median(data []float64) float64 {
+	if len(data) == 0 {
+		return 0
+	}
 	data = BubbleSort(data)
 	n := len(data)
 
@@ -35,7 +43,11 @@ func BubbleSort(data []float64) []float64 {
 	return data
 }
 
+// Variance calculates the variance
 func Variance(data []float64) float64 {
+	if len(data) == 0 {
+		return 0
+	}
 	miu := Mean(data)
 	var sqrs float64 = 0
 	for _, value := range data {
@@ -43,18 +55,3 @@ func Variance(data []float64) float64 {
 	}
 	return sqrs / float64(len(data))
 }
-
-// func StDev(variance float64) float64 {
-// 	var wholePart, decimalPart float64
-
-// 	for i := 0; variance >= 0; i++ {
-// 		wholePart = float64(i)
-// 		variance -= 2*wholePart + 1
-// 	}
-
-// 	decimalPart = (variance + 2*wholePart + 1) / (2*wholePart + 1)
-
-// 	exactSqrt := wholePart + decimalPart
-
-// 	return exactSqrt
-// }
