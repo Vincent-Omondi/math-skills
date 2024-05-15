@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"math"
 	"os"
-	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -21,13 +20,6 @@ func main() {
 	}
 
 	inputFile := os.Args[1]
-
-	// Check if the file has a valid extension .txt
-	fileExtension := filepath.Ext(inputFile)
-	if fileExtension != ".txt" {
-		fmt.Printf("Error: Only .txt and .xlsx files are allowed. File '%s' has an invalid extension.\n", inputFile)
-		return
-	}
 
 	// Open the file
 	file, err := os.Open(inputFile)
@@ -48,7 +40,7 @@ func main() {
 	// Slice to store the data
 	var data []float64
 
-	// REad file line by line
+	// Read file line by line
 	for scanner.Scan() {
 		line := scanner.Text()
 
@@ -73,13 +65,12 @@ func main() {
 		return
 	}
 
-	var overFlowCount int
 	var validData []float64
 
 	for _, value := range data {
 		intValue, overflow := utils.FloatToInt(value)
 		if overflow {
-			overFlowCount++
+			continue
 		} else {
 			validData = append(validData, float64(intValue))
 		}

@@ -100,6 +100,17 @@ Variance: 769
 Standard Deviation: 28
 ```
 All values are rounded to the nearest integer.
+The program accepts a wide range of files including the following:
+
+- **Plain Text Formats**: `.txt`, `.csv`
+- **Spreadsheet Formats**: `.xls`, `.xlsx`, `.ods`
+- **Database Formats**: `.sqlite`, `.dbf`
+- **JSON and XML Formats**: `.json`, `.xml`
+- **Specialized Data Formats**: `.hdf`, `.nc`
+- **Statistical Software Formats**: `.sav`, `.dta`
+- **Compressed Formats**: `.zip`, `.gz`
+- **Web and API Formats**: `.html`, `.json` (from API calls)
+- **Geographic Information System (GIS) Formats**: `.shp`, `.kml`
 
 <p align="right">(<a href="#math-skills">back to top</a>)</p>
 
